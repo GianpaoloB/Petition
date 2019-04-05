@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css?family=Muli:300,400,600,700");
+* {
+}
+body {
+    font-family: "Muli", sans-serif;
+    color: #f2f2f2;
+}
+main {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: #555;
+    min-height: 100vh;
+    padding-top: 100px;
+}
+main::before {
+    background: url(img/background.jpg) center center fixed / cover repeat-y;
+    content: "";
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+    min-height: 100vh;
+}
+header img {
+    width: 200px;
+    border-radius: 50%;
+    float: left;
+    box-shadow: 0px 10px 100px 0px dimgray;
+}
+h1 {
+    display: block;
+    float: left;
+    margin: 90px 40px;
+    font-weight: 500;
+}
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+nav li {
+    list-style-type: none;
+    width: 200px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    border-radius: 20px;
+    margin: 20px;
+    box-shadow: 0px 10px 100px 0px dimgray;
+
+    /* W3C */
+    background: linear-gradient(
+        top,
+        #ff3232 0%,
+        #fcf528 16%,
+        #28fc28 32%,
+        #28fcf8 50%,
+        #272ef9 66%,
+        #ff28fb 82%,
+        #ff3232 100%
+    );
+
+    /* Firefox */
+    background: -moz-linear-gradient(
+        top,
+        #ff3232 0%,
+        #fcf528 16%,
+        #28fc28 32%,
+        #28fcf8 50%,
+        #272ef9 66%,
+        #ff28fb 82%,
+        #ff3232 100%
+    );
+    /* Chrome,Safari4+ */
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0%, #ff3232),
+        color-stop(16%, #fcf528),
+        color-stop(32%, #28fc28),
+        color-stop(50%, #28fcf8),
+        color-stop(66%, #272ef9),
+        color-stop(82%, #ff28fb),
+        color-stop(100%, #ff3232)
+    );
+    /* Chrome10+,Safari5.1+ */
+    background: -webkit-linear-gradient(
+        top,
+        #ff3232 0%,
+        #fcf528 16%,
+        #28fc28 32%,
+        #28fcf8 50%,
+        #272ef9 66%,
+        #ff28fb 82%,
+        #ff3232 100%
+    );
+    background-size: 1000%;
+    -moz-background-size: 1000%;
+    -webkit-background-size: 1000%;
+    /* W3C */
+    animation-name: fun-time-awesome;
+    animation-duration: 40s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+    /* Firefox: */
+    -moz-animation-name: fun-time-awesome;
+    -moz-animation-duration: 40s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-direction: alternate;
+    -moz-animation-play-state: running;
+    /* Chrome, Safari */
+    -webkit-animation-name: fun-time-awesome;
+    -webkit-animation-duration: 40s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-play-state: running;
+}
+/* W3C */
+@keyframes fun-time-awesome {
+    0% {
+        background-position: left top;
+    }
+    100% {
+        background-position: left bottom;
+    }
+}
+/* Firefox */
+@-moz-keyframes fun-time-awesome {
+    0% {
+        background-position: left top;
+    }
+    100% {
+        background-position: left bottom;
+    }
+}
+/* Chrome, Safari */
+@-webkit-keyframes fun-time-awesome {
+    0% {
+        background-position: left top;
+    }
+    100% {
+        background-position: left bottom;
+    }
+}
+a {
+    color: #fff;
+}
+nav li a {
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+nav li a:hover {
+    text-decoration: underline;
+    color: #ccc;
+}
+.projects nav li {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    margin: 2px;
+}
+.projects nav li a {
+    font-size: 14px;
+}
+section.project {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 40px 90px;
+    margin: 30px 0;
+    border-radius: 30px;
+    box-shadow: 0px 10px 100px 0px dimgrey;
+}
+form {
+    display: flex;
+    justify-content: space-around;
+}
+form canvas {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+form input,
+form button {
+    width: 200px;
+    height: 30px;
+    font-size: 16px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+form div {
+    display: flex;
+    flex-direction: column;
+}
+form div label {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+}
+form div div.sumbit_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
