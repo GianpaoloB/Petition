@@ -1,0 +1,22 @@
+<h2>WELCOME TO THE PETITION "BEARDED DRAG QUEEN IN RUPAUL'S DRAGRACE"</h2>
+<p>If you are not registered yet, take yourself 2 minutes of your time to fill the form, afterwards you'll be redirected to the signing page, so you can sign the petition</p>
+{{#if error}}
+   <h3 class="error">USERNAME OR PASSWORD NOT CORRECT, PLEASE CHECK IT AND TRY AGAIN</h3>
+ {{/if}}
+<form class="" action="/login" method="post">
+    <div class="">
+
+    <label for="">
+        Email Address
+        <input type="text" name="email" value="" id="email" required>
+    </label>
+    <label for="">
+        Password
+        <input type="password" name="password" value="" id="password" required>
+    </label>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    <div class="sumbit_buttons">
+    <input type="submit" value="Submit" id="submit">
+</div>
+</div>
+</form>

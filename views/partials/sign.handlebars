@@ -2,29 +2,15 @@
 <p>If you agree with my cause, sign up the petition, and let's send it to Mama Ru, so she can see we are a moltitude of people wishing for it to happen</p>
 
 <form class="" action="/petition" method="post">
-    <div class="">
-
-    <label for="">
-        First Name
-        <input type="text" name="firstName" value="" id="firstName">
-    </label>
-    <label for="">
-        Last Name
-        <input type="text" name="lastName" value="" id="lastName">
-    </label>
-</div>
-
 <div class="">
-
     <label for="">Sign up with your mouse/finger
         <canvas id="signature" width="500" height="100"></canvas>
     </label>
     <input type="hidden" name="signature" value="" id="signatureVal">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <div class="sumbit_buttons">
-
-    <input type="submit" value="Submit" id="submit">
-    <button>Clear Signature</button>
-</div>
+        <input type="submit" value="Submit" id="submit">
+        <button>Clear Signature</button>
+    </div>
 </div>
 </form>

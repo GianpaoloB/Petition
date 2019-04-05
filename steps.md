@@ -29,3 +29,13 @@
         INSERT INTO
         SELECT TO GET THE NAMES OF signers
         (OPT) SELECT TO GET THE NUMBERS OF SIGNERS
+
+---
+
+    REGISTRATION ROUTES
+    * GET REGISTER
+    * POST REGISTER
+        * store userId in cookie cookieSession
+    * GET login
+    * POST login
+        * store userid in cookie session
