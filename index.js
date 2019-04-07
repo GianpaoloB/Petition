@@ -46,10 +46,21 @@ app.get("/login", (request, response) => {
     });
 });
 app.get("/petition", (request, response) => {
-    console.log("Starting the petition");
-    response.render("home", {
-        layout: "main"
-    });
+    if (request.session.userId) {
+        let id = request.session.userId;
+        db.hasSigned(id).then(data => {
+            if (data.rows[0] != []) {
+                request.session.signersId = data.rows[0].id;
+                response.redirect("/thanks");
+            } else {
+                response.render("home", {
+                    layout: "main"
+                });
+            }
+        });
+    } else {
+        response.redirect("/");
+    }
 });
 
 app.get("/thanks", (request, response) => {
@@ -91,20 +102,10 @@ app.post("/register", (request, response) => {
             request.session.firstName = firstName;
             request.session.lastName = lastName;
             console.log("Checking the First name in Registration", firstName);
-            return db
-                .newUser(firstName, lastName, email, pwd)
-                .then(id => {
-                    request.session.userId = id;
-                    response.redirect("/petition");
-                    console.log("any string");
-                })
-                .catch(err => {
-                    console.log("can't make the db query", err);
-                    response.render("registration", {
-                        error: true,
-                        layout: "main"
-                    });
-                });
+            return db.newUser(firstName, lastName, email, pwd).then(id => {
+                request.session.userId = id;
+                response.redirect("/petition");
+            });
         })
         .catch(err => {
             console.log("hashing an empty password???", err);
@@ -125,7 +126,7 @@ app.post("/login", (request, response) => {
             );
         })
         .catch(err => {
-            console.log(err);
+            console.log("LOGIN ", err);
             response.render("login", {
                 error: true,
                 layout: "main"

@@ -1,31 +1,31 @@
 <h2>WELCOME TO THE PETITION "BEARDED DRAG QUEEN IN RUPAUL'S DRAGRACE"</h2>
 <p>If you are not registered yet, take yourself 2 minutes of your time to fill the form, afterwards you'll be redirected to the signing page, so you can sign the petition</p>
 {{#if error}}
-   <h3 class="error">USERNAME OR PASSWORD NOT CORRECT, PLEASE CHECK IT AND TRY AGAIN</h3>
+   <h3 class="error">Please check your email address! There is already an account with this email address </h3>
  {{/if}}
 <form class="" action="/register" method="post">
     <div class="">
+        <label for="">
+            First Name
+            <input type="text" name="firstName" value="" id="firstName" required>
+        </label>
+        <label for="">
+            Last Name
+            <input type="text" name="lastName" value="" id="lastName"required>
+        </label>
 
-    <label for="">
-        First Name
-        <input type="text" name="firstName" value="" id="firstName">
-    </label>
-    <label for="">
-        Last Name
-        <input type="text" name="lastName" value="" id="lastName">
-    </label>
-
-    <label for="">
-        Email Address
-        <input type="text" name="email" value="" id="email">
-    </label>
-    <label for="">
-        Password
-        <input type="password" name="password" value="" id="password">
-    </label>
-    <input type="hidden" name="_csrf" value="{{csrfToken}}">
-    <div class="sumbit_buttons">
-    <input type="submit" value="Submit" id="submit">
-</div>
-</div>
+        <label for="">
+            Email Address
+            <input type="email" name="email" value="" id="email" required>
+        </label>
+        <label for="">
+            Password
+            <input type="password" name="password" value="" id="password" required>
+        </label>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <div class="sumbit_buttons">
+            <input type="submit" value="Submit" id="submit">
+        </div>
+    </div>
 </form>
+<h4>If you're already registered, go to the <a href="/login">Login</a> page</h4>
