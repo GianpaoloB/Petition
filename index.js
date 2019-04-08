@@ -33,7 +33,11 @@ app.use(function(request, response, next) {
 
 ////ROUTING
 app.get("/", (request, response) => {
-    response.redirect("/register");
+    if (request.session.signersId) {
+        response.redirect("/thanks");
+    } else {
+        response.redirect("/register");
+    }
 });
 app.get("/register", (request, response) => {
     response.render("registration", {
@@ -45,19 +49,32 @@ app.get("/login", (request, response) => {
         layout: "main"
     });
 });
+app.get("/profile", (request, response) => {
+    response.render("profile", {
+        layout: "main"
+    });
+});
 app.get("/petition", (request, response) => {
     if (request.session.userId) {
         let id = request.session.userId;
-        db.hasSigned(id).then(data => {
-            if (data.rows[0] != []) {
-                request.session.signersId = data.rows[0].id;
-                response.redirect("/thanks");
-            } else {
-                response.render("home", {
-                    layout: "main"
-                });
-            }
-        });
+        db.hasSigned(id)
+            .then(data => {
+                console.log(
+                    "In the then after i checked if the user has signed already",
+                    data
+                );
+                if (data.rows.length > 0) {
+                    request.session.signersId = data.rows[0].id;
+                    response.redirect("/thanks");
+                } else {
+                    response.render("home", {
+                        layout: "main"
+                    });
+                }
+            })
+            .catch(e => {
+                console.log("error in get petition", e);
+            });
     } else {
         response.redirect("/");
     }
@@ -92,6 +109,20 @@ app.get("/signers", (request, response) => {
             console.log("Error in getting the signers", e);
         });
 });
+app.get("/signers/:city", (request, response) => {
+    let city = request.params.city;
+    db.getSignersCity(city)
+        .then(data => {
+            console.log(data);
+            response.render("signers", {
+                signersArr: data.rows,
+                layout: "main"
+            });
+        })
+        .catch(e => {
+            console.log("Error in getting the signers", e);
+        });
+});
 //POST ROUTING
 app.post("/register", (request, response) => {
     let firstName = request.body.firstName;
@@ -102,9 +133,9 @@ app.post("/register", (request, response) => {
             request.session.firstName = firstName;
             request.session.lastName = lastName;
             console.log("Checking the First name in Registration", firstName);
-            return db.newUser(firstName, lastName, email, pwd).then(id => {
-                request.session.userId = id;
-                response.redirect("/petition");
+            return db.newUser(firstName, lastName, email, pwd).then(data => {
+                request.session.userId = data.rows[0].id;
+                response.redirect("/profile");
             });
         })
         .catch(err => {
@@ -115,6 +146,37 @@ app.post("/register", (request, response) => {
             });
         });
 });
+
+app.post("/profile", (request, response) => {
+    if (
+        request.body.age == "" &&
+        request.body.city == "" &&
+        request.body.url == ""
+    ) {
+        response.redirect("/petition");
+    } else {
+        let age = request.body.age;
+        let city = request.body.city;
+        let url = request.body.url;
+        let userId = request.session.userId;
+        if (url.indexOf("http://", 0) != 0 || url.indexOf("https://", 0) != 0) {
+            url = "http://" + url;
+        }
+        console.log("About to insert the profile", age, city, url, userId);
+        db.profile(age, city, url, userId)
+            .then(user => {
+                response.redirect("/petition");
+            })
+            .catch(err => {
+                console.log("PROFILE ", err);
+                response.render("profile", {
+                    error: true,
+                    layout: "main"
+                });
+            });
+    }
+});
+
 app.post("/login", (request, response) => {
     db.userPassword(request.body.email)
         .then(user => {
@@ -135,10 +197,9 @@ app.post("/login", (request, response) => {
 });
 app.post("/petition", (request, response) => {
     console.log("POST PETITION");
-    let firstName = request.session.firstName;
-    let lastName = request.session.lastName;
     let signature_url = request.body.signature;
-    db.addSignature(firstName, lastName, signature_url)
+    let userId = request.session.userId;
+    db.addSignature(signature_url, userId)
         .then(id => {
             //console.log(id);
             request.session.signersId = id.rows[0].id;
