@@ -1,0 +1,45 @@
+<h2>Profile update</h2>
+<p>NOTA BENE: If the password field will be left empty, you will mantain the password you have till now</p>
+{{#if error}}
+   <h3 class="error">Please check your email address! There is already an account with this email address </h3>
+ {{/if}}
+<form class="" action="/update" method="post">
+    <div class="">
+    {{#profile}}
+        <label for="">
+            First Name
+            <input type="text" name="firstName" value="{{first_name}}" id="firstName" required>
+        </label>
+        <label for="">
+            Last Name
+            <input type="text" name="lastName" value="{{last_name}}" id="lastName"required>
+        </label>
+
+        <label for="">
+            Email Address
+            <input type="email" name="email" value="{{email}}" id="email" required>
+        </label>
+        <label for="">
+            Password
+            <input type="password" name="password" value="" id="password">
+        </label>
+        <label for="">
+            Age
+            <input type="number" name="age" value="{{age}}" id="age" min="12" max="150">
+        </label>
+        <label for="">
+            City
+            <input type="text" name="city" value="{{city}}" id="city">
+        </label>
+
+        <label for="">
+            Homepage
+            <input type="text" name="url" value="{{url}}" id="url">
+        </label>
+    {{/profile}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <div class="sumbit_buttons">
+            <input type="submit" value="UPDATE PROFILE" id="submit">
+        </div>
+    </div>
+</form>

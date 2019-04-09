@@ -35,4 +35,4 @@ FROM
     user_profiles
     JOIN users ON user_profiles.userId = users.id
     JOIN signatures ON signatures.userId = user_profiles.userId
-    WHERE LOWER(city) = LOWER("hhh");
+    WHERE LOWER(City) = LOWER($1);
