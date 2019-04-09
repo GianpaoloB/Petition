@@ -58,6 +58,13 @@ app.get("/login", (request, response) => {
     });
   }
 });
+app.get("/delsig", (request, response) => {
+  let id = request.session.userId;
+  db.removeSignature(id).then(() => {
+    request.session.signersId = null;
+    response.redirect("/petition");
+  });
+});
 app.get("/profile", (request, response) => {
   response.render("profile", {
     layout: "main"
@@ -103,15 +110,19 @@ app.get("/thanks", (request, response) => {
   let id = request.session.signersId;
   let firstName = request.session.firstName;
   let lastName = request.session.lastName;
-  db.thankUser(id).then(data => {
-    personObj = {
-      firstName,
-      lastName,
-      signature: data.rows[0].signature_url
-    };
-    response.render("thanks", {
-      person: personObj,
-      layout: "main"
+  db.getSignersNum().then(count => {
+    count = count.rows[0].count;
+    db.thankUser(id).then(data => {
+      personObj = {
+        firstName,
+        lastName,
+        count,
+        signature: data.rows[0].signature_url
+      };
+      response.render("thanks", {
+        person: personObj,
+        layout: "main"
+      });
     });
   });
 });
@@ -232,12 +243,24 @@ app.post("/update", (request, response) => {
 app.post("/login", (request, response) => {
   db.userPassword(request.body.email)
     .then(user => {
-      bc.checkPassword(request.body.password, user.rows[0].password).then(
-        data => {
-          request.session.userId = user.rows[0].id;
-          response.redirect("/petition");
-        }
-      );
+      bc.checkPassword(request.body.password, user.rows[0].password)
+        .then(data => {
+          if (data) {
+            request.session.userId = user.rows[0].id;
+            request.session.firstName = user.rows[0].first_name;
+            request.session.lastName = user.rows[0].last_name;
+            response.redirect("/petition");
+          } else {
+            throw new Error("Whoops!");
+          }
+        })
+        .catch(err => {
+          console.log("LOGIN ", err);
+          response.render("login", {
+            error: true,
+            layout: "main"
+          });
+        });
     })
     .catch(err => {
       console.log("LOGIN ", err);

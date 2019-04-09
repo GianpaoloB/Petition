@@ -27,6 +27,14 @@ exports.getSigners = function getSigners() {
     'SELECT users.first_name AS "first_name", users.last_name AS "last_name", user_profiles.age AS "AGE", user_profiles.url AS "Homepage", user_profiles.city AS "City", signatures.userId AS "signed" FROM user_profiles JOIN users ON user_profiles.userId = users.id JOIN signatures ON signatures.userId = users.id;';
   return db.query(q);
 };
+exports.getSignersNum = function getSignersNum() {
+  let q = "SELECT COUNT(signature_url) FROM signatures;";
+  return db.query(q);
+};
+exports.removeSignature = function removeSignature(userId) {
+  let q = "DELETE FROM signatures WHERE userId = $1;";
+  return db.query(q, [userId]);
+};
 
 exports.getSignersCity = function getSignersCity(city) {
   let q = `  SELECT
