@@ -6,8 +6,8 @@ CREATE TABLE user_profiles(
     age INTEGER,
     city VARCHAR(255),
     url VARCHAR(600),
-    userId INTEGER NOT NULL UNIQUE
     -- userId INTEGER REFERENCES users(id) NOT NULL UNIQUE
+    userId INTEGER NOT NULL UNIQUE
 );
 
 SELECT

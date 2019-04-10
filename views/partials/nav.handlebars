@@ -1,0 +1,19 @@
+{{#if notlogged}}
+    <nav class="menu">
+        <li> <a href="/">HOME</a> </li>
+        {{#if registration}}
+        <li> <a href="/login">LOGIN</a> </li>
+        {{else}}
+        <li> <a href="/register">REGISTRATION</a> </li>
+        {{/if}}
+    </nav>
+{{else}}
+    <nav class="menu">
+        <li> <a href="/logout">LOGOUT</a> </li>
+        <li> <a href="/update">UPDATE PROFILE</a> </li>
+        {{#if signatureLink}}
+        <li> <a href="/delsig">DELETE SIGNATURE</a> </li>
+        {{/if}}
+        <li> <a href="/signers">COMMUNITY</a> </li>
+    </nav>
+{{/if}}

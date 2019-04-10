@@ -15,7 +15,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(
   cookieSession({
     maxAge: 1000 * 60 * 60 * 24 * 14,
-    secret: "I am always angry."
+    secret: process.env.SESSION_SECRET || "I am always angry."
   })
 );
 app.use(
@@ -45,6 +45,8 @@ app.get("/register", (request, response) => {
     response.redirect("/petition");
   } else {
     response.render("registration", {
+      notlogged: true,
+      registration: true,
       layout: "main"
     });
   }
@@ -54,6 +56,8 @@ app.get("/login", (request, response) => {
     response.redirect("/petition");
   } else {
     response.render("login", {
+      notlogged: true,
+      registration: false,
       layout: "main"
     });
   }
@@ -76,6 +80,7 @@ app.get("/update", (request, response) => {
     console.log(data);
     response.render("update", {
       profile: data.rows[0],
+      signatureLink: false,
       layout: "main"
     });
   });
@@ -120,6 +125,7 @@ app.get("/thanks", (request, response) => {
         signature: data.rows[0].signature_url
       };
       response.render("thanks", {
+        signatureLink: true,
         person: personObj,
         layout: "main"
       });
@@ -144,6 +150,7 @@ app.get("/signers/:city", (request, response) => {
     .then(data => {
       console.log(data);
       response.render("signers", {
+        city,
         signersArr: data.rows,
         layout: "main"
       });
@@ -288,4 +295,4 @@ app.post("/petition", (request, response) => {
   //how do we query a database from
 });
 
-app.listen(8080, () => ca.rainbow("Petition"));
+app.listen(process.env.PORT || 8080, () => ca.rainbow("Petition"));
