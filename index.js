@@ -74,6 +74,12 @@ app.get("/profile", (request, response) => {
     layout: "main"
   });
 });
+app.get("/remove", (request, response) => {
+  let id = request.session.userId;
+  db.removeUser(id).then(() => {
+    response.redirect("/logout");
+  });
+});
 app.get("/update", (request, response) => {
   let id = request.session.userId;
   db.getProfile(id).then(data => {
@@ -264,6 +270,7 @@ app.post("/login", (request, response) => {
         .catch(err => {
           console.log("LOGIN ", err);
           response.render("login", {
+            notlogged: true,
             error: true,
             layout: "main"
           });
@@ -272,6 +279,7 @@ app.post("/login", (request, response) => {
     .catch(err => {
       console.log("LOGIN ", err);
       response.render("login", {
+        notlogged: true,
         error: true,
         layout: "main"
       });
@@ -294,5 +302,9 @@ app.post("/petition", (request, response) => {
 
   //how do we query a database from
 });
-
+////TO AVOID PEOPLE FROM WRITING ODD URLS
+app.get("*", (request, response) => {
+  console.log("THAT'S A STUPID GET REQUEST!!!");
+  response.redirect("/");
+});
 app.listen(process.env.PORT || 8080, () => ca.rainbow("Petition"));

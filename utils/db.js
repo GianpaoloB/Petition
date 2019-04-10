@@ -67,12 +67,18 @@ exports.newUser = function newUser(firstName, lastName, email, password) {
   return db.query(q, params);
 };
 exports.updateUser = function updateUser(firstName, lastName, email, userId) {
-  let q = `UPDATE users
-            SET first_name = $1, last_name = $2, email = $3
-            WHERE id=$4`;
+  let q = `UPDATE users SET first_name = $1, last_name = $2, email = $3
+    WHERE id=$4`;
   let params = [firstName, lastName, email, userId];
   return db.query(q, params);
 };
+
+exports.removeUser = function removeUser(userId) {
+  let q = `DELETE FROM users WHERE id=$1`;
+  let params = [userId];
+  return db.query(q, params);
+};
+
 exports.updateUserPwd = function updateUserPwd(
   firstName,
   lastName,

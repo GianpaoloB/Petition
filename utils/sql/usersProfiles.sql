@@ -6,9 +6,12 @@ CREATE TABLE user_profiles(
     age INTEGER,
     city VARCHAR(255),
     url VARCHAR(600),
-    -- userId INTEGER REFERENCES users(id) NOT NULL UNIQUE
-    userId INTEGER NOT NULL UNIQUE
+    userId INTEGER NOT NULL UNIQUE,
+    FOREIGN KEY (userId) REFERENCES users(id)
+    ON DELETE CASCADE
+
 );
+userId INTEGER NOT NULL UNIQUE
 
 SELECT
   users.first_name AS "first_name",
