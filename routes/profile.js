@@ -66,6 +66,9 @@ profileRouter.post("/profile/update", isLoggedOut, (request, response) => {
     db.updateUser(firstName, lastName, email, userId)
       .then(
         db.upsertProfile(age, city, url, userId).then(user => {
+          request.session.firstName = firstName;
+          request.session.lastName = lastName;
+
           response.redirect("/petition");
         })
       )
