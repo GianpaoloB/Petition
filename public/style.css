@@ -10,7 +10,7 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: #555;
+  color: #333;
   min-height: 100vh;
   padding-top: 100px;
 }
@@ -187,11 +187,12 @@ nav li a:hover {
   font-size: 14px;
 }
 section.project {
-  background: rgba(255, 255, 255, 0.8);
-  padding: 40px 90px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 40px;
   margin: 30px 0;
   border-radius: 30px;
-  box-shadow: 0px 10px 100px 0px dimgrey;
+  box-shadow: 0px 10px 100px 0px darkblue;
+  max-width: 1000px;
 }
 nav.menu {
   justify-content: flex-end;
