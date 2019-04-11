@@ -1,6 +1,6 @@
 const ca = require("chalk-animation");
 const express = require("express");
-const app = express();
+const app = (module.exports.app = express());
 const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const csurf = require("csurf");
@@ -56,4 +56,6 @@ app.get("*", (request, response) => {
   console.log("THAT'S A STUPID GET REQUEST!!!");
   response.redirect("/");
 });
-app.listen(process.env.PORT || 8080, () => ca.rainbow("Petition"));
+if (require.main == module) {
+  app.listen(process.env.PORT || 8080, () => ca.rainbow("Petition"));
+}

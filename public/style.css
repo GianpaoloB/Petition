@@ -39,6 +39,8 @@ h1 {
   font-weight: bold;
   color: white;
   text-transform: uppercase;
+  font-family: Impact, sans-serif;
+  font-size: 6em;
 }
 h1 a {
   color: white;
