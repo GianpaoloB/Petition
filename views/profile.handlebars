@@ -1,1 +1,25 @@
-{{>profile}}
+<h2>WELCOME TO THE PETITION "BEARDED DRAG QUEEN IN RUPAUL'S DRAGRACE"</h2>
+<p>Take yourself some time to let us know a little bit more about you</p>
+
+<form class="" action="/profile" method="post">
+    <div class="">
+        <label for="">
+            Age
+            <input type="number" name="age" value="" id="age" min="12" max="150">
+        </label>
+        <label for="">
+            City
+            <input type="text" name="city" value="" id="city">
+        </label>
+
+        <label for="">
+            Homepage
+            <input type="text" name="url" value="" id="url">
+        </label>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <div class="sumbit_buttons">
+            <input type="submit" value="CONTINUE" id="submit">
+        </div>
+    </div>
+</form>
+<h4>If you're already registered, go to the <a href="/login">Login</a> page</h4>
