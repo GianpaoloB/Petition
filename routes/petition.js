@@ -3,7 +3,7 @@ const petitionRouter = express.Router();
 const { hasSigned, hasNotSigned } = require("./middleware");
 const db = require("../utils/db");
 
-petitionRouter.get("/petition", hasNotSigned, (request, response) => {
+petitionRouter.get("/petition", hasSigned, (request, response) => {
   let id = request.session.userId;
   db.hasSigned(id)
     .then(data => {
@@ -25,7 +25,7 @@ petitionRouter.get("/petition", hasNotSigned, (request, response) => {
     });
 });
 
-petitionRouter.post("/petition", hasNotSigned, (request, response) => {
+petitionRouter.post("/petition", hasSigned, (request, response) => {
   console.log("POST PETITION");
   let signature_url = request.body.signature;
   let userId = request.session.userId;
@@ -43,7 +43,7 @@ petitionRouter.post("/petition", hasNotSigned, (request, response) => {
   //how do we query a database from
 });
 
-petitionRouter.get("/thanks", hasSigned, (request, response) => {
+petitionRouter.get("/thanks", hasNotSigned, (request, response) => {
   let id = request.session.signersId;
   let firstName = request.session.firstName;
   let lastName = request.session.lastName;
@@ -65,7 +65,7 @@ petitionRouter.get("/thanks", hasSigned, (request, response) => {
   });
 });
 
-petitionRouter.get("/petition/unsign", hasSigned, (request, response) => {
+petitionRouter.get("/petition/unsign", hasNotSigned, (request, response) => {
   let id = request.session.userId;
   db.removeSignature(id).then(() => {
     request.session.signersId = null;

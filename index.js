@@ -37,7 +37,7 @@ app.use(function(request, response, next) {
 });
 
 ////ROUTING
-app.use(isLoggedIn);
+app.use(isLoggedOut);
 app.get("/", (request, response) => {
   response.redirect("/register");
 });

@@ -1,16 +1,16 @@
 const express = require("express");
 const profileRouter = express.Router();
-const { isLoggedIn } = require("./middleware");
+const { isLoggedOut } = require("./middleware");
 const db = require("../utils/db");
 const bc = require("../utils/bc");
 
-profileRouter.get("/profile", isLoggedIn, (request, response) => {
+profileRouter.get("/profile", isLoggedOut, (request, response) => {
   response.render("profile", {
     layout: "main"
   });
 });
 
-profileRouter.post("/profile", isLoggedIn, (request, response) => {
+profileRouter.post("/profile", isLoggedOut, (request, response) => {
   if (
     request.body.age == "" &&
     request.body.city == "" &&
@@ -40,7 +40,7 @@ profileRouter.post("/profile", isLoggedIn, (request, response) => {
   }
 });
 
-profileRouter.get("/profile/update", isLoggedIn, (request, response) => {
+profileRouter.get("/profile/update", isLoggedOut, (request, response) => {
   let id = request.session.userId;
   db.getProfile(id).then(data => {
     console.log(data);
@@ -52,7 +52,7 @@ profileRouter.get("/profile/update", isLoggedIn, (request, response) => {
   });
 });
 
-profileRouter.post("/profile/update", isLoggedIn, (request, response) => {
+profileRouter.post("/profile/update", isLoggedOut, (request, response) => {
   let firstName = request.body.firstName;
   let lastName = request.body.lastName;
   let email = request.body.email;

@@ -1,6 +1,12 @@
 const { app } = require("./index");
 const supertest = require("supertest");
-const cookieSession = require("./cookieSession");
-const bodyParser = reqire("body-parser");
+const cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
 
-text("POST");
+test("Request to / is successful", () => {
+  return supertest(app)
+    .get("/")
+    .then(res => {
+      expect(res.redirect).toBe("/");
+    });
+});

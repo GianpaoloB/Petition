@@ -1,9 +1,9 @@
 const express = require("express");
 const signersRouter = express.Router();
-const { hasSigned } = require("./middleware");
+const { hasNotSigned } = require("./middleware");
 const db = require("../utils/db");
 
-signersRouter.get("/signers", hasSigned, (request, response) => {
+signersRouter.get("/signers", hasNotSigned, (request, response) => {
   db.getSigners()
     .then(data => {
       response.render("signers", {
@@ -15,7 +15,7 @@ signersRouter.get("/signers", hasSigned, (request, response) => {
       console.log("Error in getting the signers", e);
     });
 });
-signersRouter.get("/signers/:city", hasSigned, (request, response) => {
+signersRouter.get("/signers/:city", hasNotSigned, (request, response) => {
   let city = request.params.city;
   db.getSignersCity(city)
     .then(data => {

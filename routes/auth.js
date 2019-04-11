@@ -1,10 +1,10 @@
 const express = require("express");
 const authRouter = express.Router();
-const { isLoggedOut } = require("./middleware");
+const { isLoggedIn } = require("./middleware");
 const db = require("../utils/db");
 const bc = require("../utils/bc");
 ////LOGIN
-authRouter.get("/login", isLoggedOut, (request, response) => {
+authRouter.get("/login", isLoggedIn, (request, response) => {
   if (request.session.signersId) {
     response.redirect("/petition");
   } else {
@@ -15,7 +15,7 @@ authRouter.get("/login", isLoggedOut, (request, response) => {
     });
   }
 });
-authRouter.post("/login", isLoggedOut, (request, response) => {
+authRouter.post("/login", isLoggedIn, (request, response) => {
   db.userPassword(request.body.email)
     .then(user => {
       bc.checkPassword(request.body.password, user.rows[0].password)
@@ -50,7 +50,7 @@ authRouter.post("/login", isLoggedOut, (request, response) => {
 
 ////REGISTRATION
 
-authRouter.get("/register", isLoggedOut, (request, response) => {
+authRouter.get("/register", isLoggedIn, (request, response) => {
   if (request.session.signersId) {
     response.redirect("/petition");
   } else {
@@ -62,7 +62,7 @@ authRouter.get("/register", isLoggedOut, (request, response) => {
   }
 });
 
-authRouter.post("/register", isLoggedOut, (request, response) => {
+authRouter.post("/register", isLoggedIn, (request, response) => {
   let firstName = request.body.firstName;
   let lastName = request.body.lastName;
   let email = request.body.email;
