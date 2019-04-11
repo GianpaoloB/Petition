@@ -53,7 +53,7 @@ app.use(require("./routes/signers"));
 
 ////TO AVOID PEOPLE FROM WRITING ODD URLS
 app.get("*", (request, response) => {
-  console.log("THAT'S A STUPID GET REQUEST!!!");
+  console.log("THAT'S A STUPID GET REQUEST!!!", request.params);
   response.redirect("/");
 });
 if (require.main == module) {
