@@ -4,9 +4,18 @@
 <nav>
     {{#signersArr}}
         {{#if Homepage}}
-            <li><a href="{{Homepage}}" target="_blank">{{first_name}} {{last_name}}</a> - {{AGE}} from <a href="/signers/{{City}}">{{City}}</a></li>
+            <li><a href="{{Homepage}}" target="_blank">{{first_name}} {{last_name}}</a>
+                 {{#if AGE}}- {{AGE}}{{/if}}
+                 {{#if City}}
+                 from <a href="/signers/{{City}}">{{City}}</a>
+                 {{/if}}
+                 </li>
         {{else}}
-            <li>{{first_name}} {{last_name}} - {{AGE}} from <a href="/signers/{{City}}">{{City}}</a></li>
+            <li>{{first_name}} {{last_name}}{{#if AGE}}- {{AGE}}{{/if}}
+            {{#if City}}
+            from <a href="/signers/{{City}}">{{City}}</a>
+            {{/if}}
+            </li>
         {{/if}}
     {{/signersArr}}
 </nav>
