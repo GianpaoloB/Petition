@@ -27,7 +27,7 @@ exports.hasSigned = function hasSigned(userId) {
 
 exports.getSigners = function getSigners() {
   let q =
-    'SELECT users.first_name AS "first_name", users.last_name AS "last_name", user_profiles.age AS "AGE", user_profiles.url AS "Homepage", user_profiles.city AS "City", signatures.userId AS "signed" FROM user_profiles JOIN users ON user_profiles.userId = users.id JOIN signatures ON signatures.userId = users.id;';
+    'SELECT users.first_name AS "first_name", users.last_name AS "last_name", user_profiles.age AS "AGE", user_profiles.url AS "Homepage", user_profiles.city AS "City", signatures.userId AS "signed" FROM users JOIN signatures ON signatures.userId = users.id LEFT JOIN user_profiles ON user_profiles.userId = users.id;';
   return db.query(q);
 };
 exports.getSignersNum = function getSignersNum() {
@@ -48,9 +48,9 @@ exports.getSignersCity = function getSignersCity(city) {
         user_profiles.city AS "City",
         signatures.userId AS "signed"
       FROM
-        user_profiles
-        JOIN users ON user_profiles.userId = users.id
+        users
         JOIN signatures ON signatures.userId = user_profiles.userId
+        LEFT JOIN users ON user_profiles.userId = users.id
         WHERE LOWER(City) = LOWER($1);`;
   return db.query(q, [city]);
 };

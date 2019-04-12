@@ -22,8 +22,10 @@ profileRouter.post("/profile", isLoggedOut, (request, response) => {
     let city = request.body.city;
     var url = request.body.url;
     let userId = request.session.userId;
-    if (url.indexOf("http://", 0) != 0 || url.indexOf("https://", 0) != 0) {
-      url = "http://" + url;
+    if (url != "") {
+      if (url.indexOf("http://", 0) != 0 || url.indexOf("https://", 0) != 0) {
+        url = "http://" + url;
+      }
     }
     console.log("About to insert the profile", age, city, url, userId);
     db.upsertProfile(age, city, url, userId)
