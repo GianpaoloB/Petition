@@ -23,7 +23,7 @@ profileRouter.post("/profile", isLoggedOut, (request, response) => {
     var url = request.body.url;
     let userId = request.session.userId;
     if (url != "") {
-      if (url.indexOf("http://", 0) != 0 || url.indexOf("https://", 0) != 0) {
+      if (url.indexOf("http://", 0) != 0 && url.indexOf("https://", 0) != 0) {
         url = "http://" + url;
       }
     }
