@@ -40,7 +40,7 @@ exports.removeSignature = function removeSignature(userId) {
 };
 
 exports.getSignersCity = function getSignersCity(city) {
-  let q = `  SELECT
+  let q = `SELECT
         users.first_name AS "first_name",
         users.last_name AS "last_name",
         user_profiles.age AS "AGE",
@@ -48,9 +48,9 @@ exports.getSignersCity = function getSignersCity(city) {
         user_profiles.city AS "City",
         signatures.userId AS "signed"
       FROM
-        users
+        user_profiles
         JOIN signatures ON signatures.userId = user_profiles.userId
-        LEFT JOIN users ON user_profiles.userId = users.id
+        JOIN users ON user_profiles.userId = users.id
         WHERE LOWER(City) = LOWER($1);`;
   return db.query(q, [city]);
 };
