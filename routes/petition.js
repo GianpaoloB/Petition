@@ -50,7 +50,7 @@ petitionRouter.get("/thanks", hasNotSigned, (request, response) => {
   db.getSignersNum()
     .then(count => {
       count = count.rows[0].count;
-      return db.thankUser(id).then(data => {
+      db.thankUser(id).then(data => {
         personObj = {
           firstName,
           lastName,
