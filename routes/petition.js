@@ -47,22 +47,27 @@ petitionRouter.get("/thanks", hasNotSigned, (request, response) => {
   let id = request.session.signersId;
   let firstName = request.session.firstName;
   let lastName = request.session.lastName;
-  db.getSignersNum().then(count => {
-    count = count.rows[0].count;
-    db.thankUser(id).then(data => {
-      personObj = {
-        firstName,
-        lastName,
-        count,
-        signature: data.rows[0].signature_url
-      };
-      response.render("thanks", {
-        signatureLink: true,
-        person: personObj,
-        layout: "main"
+  db.getSignersNum()
+    .then(count => {
+      count = count.rows[0].count;
+      db.thankUser(id).then(data => {
+        personObj = {
+          firstName,
+          lastName,
+          count,
+          signature: data.rows[0].signature_url
+        };
+        response.render("thanks", {
+          signatureLink: true,
+          person: personObj,
+          layout: "main"
+        });
       });
+    })
+    .catch(err => {
+      console.log("The thank you page is giving problem", err);
+      response.redirect("logout");
     });
-  });
 });
 
 petitionRouter.get("/petition/unsign", hasNotSigned, (request, response) => {
