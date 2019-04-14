@@ -97,7 +97,7 @@ exports.upsertProfile = function upsertProfile(age, city, url, userId) {
   let q = `INSERT INTO user_profiles (age, city, url, userId) VALUES ($1,$2,$3,$4)
     ON CONFLICT(userId)  DO UPDATE
     SET age = $1, city = $2, url=$3, userId=$4;`;
-  let params = [age, city, url, userId];
+  let params = [age || null, city, url, userId];
   return db.query(q, params);
 };
 
