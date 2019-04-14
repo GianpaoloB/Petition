@@ -76,6 +76,45 @@ canvas.addEventListener(
   false
 );
 
+// Prevent scrolling when touching the canvas
+document.body.addEventListener(
+  "touchstart",
+  function(e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  },
+  false
+);
+document.body.addEventListener(
+  "touchend",
+  function(e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  },
+  false
+);
+document.body.addEventListener(
+  "touchmove",
+  function(e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  },
+  false
+);
+
+// Get the position of the mouse relative to the canvas
+function getMousePos(canvasDom, mouseEvent) {
+  var rect = canvasDom.getBoundingClientRect();
+  return {
+    x: mouseEvent.clientX - rect.left,
+    y: mouseEvent.clientY - rect.top
+  };
+}
+
+// Get the position of a touch relative to the canvas
 function getTouchPos(canvasDom, touchEvent) {
   var rect = canvasDom.getBoundingClientRect();
   return {
@@ -83,6 +122,20 @@ function getTouchPos(canvasDom, touchEvent) {
     y: touchEvent.touches[0].clientY - rect.top
   };
 }
+
+// Draw to the canvas
+function renderCanvas() {
+  if (drawing) {
+    ctx.moveTo(lastPos.x, lastPos.y);
+    ctx.lineTo(mousePos.x, mousePos.y);
+    ctx.stroke();
+    lastPos = mousePos;
+  }
+}
+(function drawLoop() {
+  requestAnimFrame(drawLoop);
+  renderCanvas();
+})();
 
 document.querySelector("#submit").addEventListener("mousedown", () => {
   console.log(canvas.toDataURL());
