@@ -2,14 +2,16 @@ const canvas = document.getElementById("signature");
 const clear = document.getElementsByTagName("button")[0];
 const ctx = canvas.getContext("2d");
 const inputSig = document.getElementById("signatureVal");
+var x = 0;
+var y = 0;
+var allow;
+///initislization
 function mySignature() {
   ctx.clearRect(0, 0, 500, 100);
   ctx.strokeStyle = "magenta";
   ctx.lineWidth = 3;
 }
-var x = 0;
-var y = 0;
-var allow;
+
 canvas.addEventListener("mousedown", startingPosition => {
   startingPosition.preventDefault();
   allow = true;
@@ -38,31 +40,29 @@ clear.addEventListener("click", myButton => {
   ctx.beginPath();
   return ctx.clearRect(0, 0, 500, 100);
 });
+function getTouches(e) {
+  return e.touches;
+}
+var offTop = canvas.offsetTop - window.pageYOffset;
+var left = canvas.offsetLeft;
 canvas.addEventListener("touchstart", function(e) {
   e.preventDefault();
-  canvas.dispatchEvent(
-    new MouseEvent("mousedown", {
-      clientX: e.touches[0].clientX,
-      clientY: e.touches[0].clientY
-    })
-  );
-  canvas.addEventListener("touchmove", function(e) {
-    e.preventDefault();
-    canvas.dispatchEvent(
-      new MouseEvent("mousemove", {
-        clientX: e.touches[0].clientX,
-        clientY: e.touches[0].clientY
-      })
-    );
-  });
+  allow = true;
+  mySignature();
+  ctx.moveTo(getTouches(e)[0].clientX - left, e.clientY - offTop);
+});
+canvas.addEventListener("touchmove", function(c) {
+  c.preventDefault();
+  console.log("top", offTop);
+  if (allow == true) {
+    x = c.touches[0].clientX - left;
+    y = c.touches[0].clientY - offTop;
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
 });
 canvas.addEventListener("touchend", function(e) {
   e.preventDefault();
-  var dbl = false;
-  dbl ? canvas.trigger("dblclick") : (dbl = true);
-  setTimeout(function() {
-    dbl = false;
-  }, 200);
 });
 // Get the position of a touch relative to the canvas
 function getTouchPos(canvasDom, touchEvent) {
